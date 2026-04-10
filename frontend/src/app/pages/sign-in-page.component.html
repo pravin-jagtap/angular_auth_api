@@ -1,0 +1,41 @@
+<section class="auth-layout">
+  <div class="auth-panel">
+    <span class="panel-tag">Welcome back</span>
+    <h1>Sign in to continue.</h1>
+    <p>Use the email and password that were saved during signup.</p>
+  </div>
+
+  <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Sign In</h2>
+
+    <label>
+      <span>Email</span>
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <small>Please enter a valid email.</small>
+      }
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" formControlName="password" placeholder="Enter your password" />
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+        <small>Password is required.</small>
+      }
+    </label>
+
+    @if (errorMessage()) {
+      <p class="error-banner">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Signing in...' : 'Sign In' }}
+    </button>
+
+    <p class="helper-copy">
+      New here?
+      <a routerLink="/sign-up">Create an account</a>
+    </p>
+  </form>
+</section>
+

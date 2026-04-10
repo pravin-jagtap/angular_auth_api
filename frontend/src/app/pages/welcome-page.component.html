@@ -1,0 +1,24 @@
+<section class="welcome-card">
+  <div class="identity-badge">{{ initials() || 'U' }}</div>
+
+  <span class="status-pill">Authenticated session</span>
+  <h1>Welcome, {{ currentUser()?.fullName }}!</h1>
+  <p>
+    You have successfully logged in using the credentials stored in PostgreSQL. This page is
+    protected and shown only to signed-in users.
+  </p>
+
+  <dl class="profile-grid">
+    <div>
+      <dt>Full name</dt>
+      <dd>{{ currentUser()?.fullName }}</dd>
+    </div>
+    <div>
+      <dt>Email</dt>
+      <dd>{{ currentUser()?.email }}</dd>
+    </div>
+  </dl>
+
+  <a routerLink="/" class="back-link">Back to landing page</a>
+</section>
+

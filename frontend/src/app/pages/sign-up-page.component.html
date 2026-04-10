@@ -1,0 +1,56 @@
+<section class="auth-layout">
+  <div class="auth-panel">
+    <span class="panel-tag">Create your account</span>
+    <h1>Sign up and save your credentials to PostgreSQL.</h1>
+    <p>
+      Once the account is created, you can use the same email and password on the sign-in page to
+      access your welcome screen.
+    </p>
+  </div>
+
+  <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>Sign Up</h2>
+
+    <label>
+      <span>Full name</span>
+      <input type="text" formControlName="fullName" placeholder="Enter your full name" />
+      @if (form.controls.fullName.touched && form.controls.fullName.invalid) {
+        <small>Full name must be at least 2 characters.</small>
+      }
+    </label>
+
+    <label>
+      <span>Email</span>
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <small>Please enter a valid email.</small>
+      }
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" formControlName="password" placeholder="Create a password" />
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+        <small>Password must be at least 6 characters.</small>
+      }
+    </label>
+
+    @if (successMessage()) {
+      <p class="success-banner">{{ successMessage() }}</p>
+    }
+
+    @if (errorMessage()) {
+      <p class="error-banner">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Creating account...' : 'Create Account' }}
+    </button>
+
+    <p class="helper-copy">
+      Already have an account?
+      <a routerLink="/sign-in">Sign in here</a>
+    </p>
+  </form>
+</section>
+
