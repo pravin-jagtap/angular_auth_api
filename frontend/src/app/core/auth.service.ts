@@ -7,7 +7,7 @@ import { AuthResponse, LoginRequest, MessageResponse, SignupRequest, User } from
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/auth';
+  private readonly apiUrl = '/api/auth';
 
   readonly currentUser = signal<User | null>(null);
   readonly authChecked = signal(false);
@@ -62,4 +62,3 @@ export class AuthService {
     );
   }
 }
-
