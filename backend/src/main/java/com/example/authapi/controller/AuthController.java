@@ -5,6 +5,7 @@ import com.example.authapi.dto.LoginRequest;
 import com.example.authapi.dto.MessageResponse;
 import com.example.authapi.dto.SignupRequest;
 import com.example.authapi.dto.UserResponse;
+import com.example.authapi.dto.UsernameAvailabilityResponse;
 import com.example.authapi.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,7 +33,7 @@ public class AuthController {
     public ResponseEntity<MessageResponse> signup(@Valid @RequestBody SignupRequest request) {
         authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new MessageResponse("Account created successfully. Please sign in."));
+                .body(new MessageResponse("Account created successfully. Please sign in with your username."));
     }
 
     @PostMapping("/login")
@@ -63,5 +65,12 @@ public class AuthController {
         Long userId = session != null ? (Long) session.getAttribute("USER_ID") : null;
         UserResponse user = authService.getAuthenticatedUser(userId);
         return ResponseEntity.ok(new AuthResponse("Authenticated user loaded.", user));
+    }
+
+    @GetMapping("/username-availability")
+    public ResponseEntity<UsernameAvailabilityResponse> usernameAvailability(@RequestParam String username) {
+        boolean available = authService.isUsernameAvailable(username);
+        String message = available ? "Username is available." : "This username is already taken.";
+        return ResponseEntity.ok(new UsernameAvailabilityResponse(available, message));
     }
 }

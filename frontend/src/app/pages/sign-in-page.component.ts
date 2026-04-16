@@ -19,7 +19,7 @@ export class SignInPageComponent {
   protected readonly errorMessage = signal('');
 
   protected readonly form = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', [Validators.required]],
     password: ['', [Validators.required]]
   });
 
@@ -44,4 +44,3 @@ export class SignInPageComponent {
     });
   }
 }
-

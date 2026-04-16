@@ -1,101 +1,223 @@
-.auth-layout {
+.auth-scene {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(340px, 480px);
   gap: 28px;
-  align-items: start;
+  align-items: stretch;
 }
 
-.auth-panel,
-.auth-form {
-  padding: 32px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(18, 55, 68, 0.1);
-  box-shadow: 0 20px 45px rgba(20, 66, 79, 0.08);
+.auth-showcase,
+.auth-card {
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(14, 37, 43, 0.12);
 }
 
-.panel-tag {
-  display: inline-block;
-  margin-bottom: 14px;
-  color: #1f6a73;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
+.auth-showcase {
+  position: relative;
+  display: grid;
+  align-content: end;
+  gap: 24px;
+  min-height: 640px;
+  padding: 40px;
+  color: #fff8ef;
+  background:
+    linear-gradient(180deg, rgba(5, 24, 28, 0.18), rgba(5, 24, 28, 0.82)),
+    url('/branding/esuvidha-logo.jpg') center/cover;
+}
+
+.auth-showcase::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.brand-lockup {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 88px;
+  height: 88px;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
+}
+
+.brand-label,
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
-.auth-panel h1,
-.auth-form h2 {
-  margin-top: 0;
+.brand-lockup h1,
+.auth-card h2 {
+  margin: 0;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
 }
 
-.auth-panel p {
-  color: #4f6974;
-  line-height: 1.8;
+.brand-lockup h1 {
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 0.96;
+  max-width: 11ch;
 }
 
-.auth-form {
+.showcase-copy,
+.auth-card__header p,
+.helper-copy {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.showcase-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.showcase-list li {
+  padding: 14px 16px;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.showcase-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.showcase-pill-row span {
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  font-size: 0.88rem;
+}
+
+.auth-card {
   display: grid;
   gap: 18px;
+  padding: 36px;
+  background: rgba(255, 250, 245, 0.92);
+  border: 1px solid rgba(33, 72, 83, 0.1);
 }
 
-.auth-form label {
+.auth-card__header {
+  display: grid;
+  gap: 10px;
+}
+
+.auth-card__header h2 {
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  color: #16333f;
+}
+
+.auth-card__header p {
+  color: #55707b;
+}
+
+.field {
   display: grid;
   gap: 8px;
 }
 
-.auth-form span {
-  font-weight: 600;
+.field span {
+  font-weight: 700;
+  color: #173640;
 }
 
-.auth-form input {
+.field input {
   width: 100%;
-  border: 1px solid rgba(20, 66, 79, 0.14);
+  border: 1px solid rgba(24, 64, 70, 0.12);
   border-radius: 18px;
-  padding: 0.95rem 1rem;
+  padding: 1rem 1.05rem;
+  background: rgba(255, 255, 255, 0.85);
   font: inherit;
-  background: #fbfefe;
+  color: #16333f;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
-.auth-form small {
-  color: #b53f54;
+.field input:focus {
+  outline: none;
+  border-color: rgba(30, 124, 129, 0.65);
+  box-shadow: 0 0 0 4px rgba(71, 186, 161, 0.16);
+  transform: translateY(-1px);
 }
 
-.auth-form button {
-  border: none;
-  border-radius: 18px;
-  padding: 1rem 1.15rem;
-  background: linear-gradient(135deg, #173e4d, #2d7b75);
-  color: #f8fffe;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.auth-form button:disabled {
-  opacity: 0.7;
-  cursor: wait;
+.field small {
+  color: #bf4a4a;
 }
 
 .error-banner {
   margin: 0;
-  padding: 0.9rem 1rem;
+  padding: 0.95rem 1rem;
   border-radius: 18px;
-  background: #fff1f2;
-  color: #b53f54;
+  background: #fff1ef;
+  color: #bf4a4a;
+}
+
+.submit-button {
+  border: none;
+  border-radius: 20px;
+  padding: 1rem 1.15rem;
+  background: linear-gradient(135deg, #155f84, #43c85c 74%, #f8a325);
+  color: #fffdfa;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 18px 30px rgba(28, 96, 107, 0.18);
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 .helper-copy {
-  margin: 0;
-  color: #5b727d;
+  color: #5d727d;
 }
 
 .helper-copy a {
-  color: #1d5669;
+  color: #155f84;
+  font-weight: 700;
 }
 
-@media (max-width: 860px) {
-  .auth-layout {
+@media (max-width: 920px) {
+  .auth-scene {
     grid-template-columns: 1fr;
+  }
+
+  .auth-showcase {
+    min-height: 520px;
   }
 }
 
+@media (max-width: 640px) {
+  .auth-showcase,
+  .auth-card {
+    border-radius: 26px;
+  }
+
+  .auth-showcase,
+  .auth-card {
+    padding: 24px;
+  }
+
+  .brand-lockup {
+    align-items: start;
+    flex-direction: column;
+  }
+}

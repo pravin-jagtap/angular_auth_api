@@ -1,24 +1,63 @@
-<section class="auth-layout">
-  <div class="auth-panel">
-    <span class="panel-tag">Welcome back</span>
-    <h1>Sign in to continue.</h1>
-    <p>Use the email and password that were saved during signup.</p>
-  </div>
+<section class="auth-scene auth-scene--signin">
+  <aside class="auth-showcase">
+    <div class="brand-lockup">
+      <img
+        src="/branding/mahaesuvidha-marathi-logo.jpg"
+        alt="Maha E Suvidha logo"
+        class="brand-logo"
+      />
+      <div>
+        <p class="brand-label">Maha E Suvidha</p>
+        <h1>Secure sign in for citizen service access.</h1>
+      </div>
+    </div>
 
-  <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
-    <h2>Sign In</h2>
+    <p class="showcase-copy">
+      Step back into a service experience that feels familiar to your old portal, but polished for
+      today’s web with stronger structure, faster login, and a cleaner visual system.
+    </p>
 
-    <label>
-      <span>Email</span>
-      <input type="email" formControlName="email" placeholder="you@example.com" />
-      @if (form.controls.email.touched && form.controls.email.invalid) {
-        <small>Please enter a valid email.</small>
+    <ul class="showcase-list">
+      <li>Username-first access for faster daily use</li>
+      <li>Protected sessions backed by Spring Boot and PostgreSQL</li>
+      <li>Refined brand styling inspired by your original JSP portal</li>
+    </ul>
+
+    <div class="showcase-pill-row">
+      <span>Trusted</span>
+      <span>Responsive</span>
+      <span>Service Ready</span>
+    </div>
+  </aside>
+
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="auth-card__header">
+      <p class="eyebrow">Welcome back</p>
+      <h2>Log in to your account</h2>
+      <p>Use the username and password you created during registration.</p>
+    </div>
+
+    <label class="field">
+      <span>Username</span>
+      <input
+        type="text"
+        formControlName="username"
+        autocomplete="username"
+        placeholder="Enter your username"
+      />
+      @if (form.controls.username.touched && form.controls.username.invalid) {
+        <small>Username is required.</small>
       }
     </label>
 
-    <label>
+    <label class="field">
       <span>Password</span>
-      <input type="password" formControlName="password" placeholder="Enter your password" />
+      <input
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        placeholder="Enter your password"
+      />
       @if (form.controls.password.touched && form.controls.password.invalid) {
         <small>Password is required.</small>
       }
@@ -28,14 +67,13 @@
       <p class="error-banner">{{ errorMessage() }}</p>
     }
 
-    <button type="submit" [disabled]="isSubmitting()">
+    <button type="submit" class="submit-button" [disabled]="isSubmitting()">
       {{ isSubmitting() ? 'Signing in...' : 'Sign In' }}
     </button>
 
     <p class="helper-copy">
-      New here?
-      <a routerLink="/sign-up">Create an account</a>
+      Need a new account?
+      <a routerLink="/sign-up">Create one here</a>
     </p>
   </form>
 </section>
-

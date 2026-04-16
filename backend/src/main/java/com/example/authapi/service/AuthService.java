@@ -22,27 +22,51 @@ public class AuthService {
     }
 
     public void register(SignupRequest request) {
-        if (userAccountRepository.existsByEmailIgnoreCase(request.email())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "An account with this email already exists.");
+        String username = normalizeUsername(request.username());
+        if (userAccountRepository.existsByUsernameIgnoreCase(username)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username is already taken.");
         }
 
+        if (!request.password().equals(request.confirmPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password and confirm password must match.");
+        }
+
+        String firstName = normalizeNamePart(request.firstName());
+        String lastName = normalizeNamePart(request.lastName());
+        String fullName = firstName + " " + lastName;
+        String mobileNumber = request.mobileNumber().trim();
+        String generatedEmail = username + "@mahaesuvidha.local";
+
         UserAccount user = new UserAccount();
-        user.setFullName(request.fullName().trim());
-        user.setEmail(request.email().trim().toLowerCase());
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setUsername(username);
+        user.setMobileNumber(mobileNumber);
+        user.setFullName(fullName);
+        user.setEmail(generatedEmail);
         user.setPasswordHash(passwordEncoder.encode(request.password()));
 
         userAccountRepository.save(user);
     }
 
     public UserResponse login(LoginRequest request) {
-        UserAccount user = userAccountRepository.findByEmailIgnoreCase(request.email().trim())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password."));
+        String identifier = request.username().trim();
+        UserAccount user = userAccountRepository
+                .findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier.toLowerCase())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED,
+                        "Invalid username or password."
+                ));
 
         if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password.");
         }
 
         return toUserResponse(user);
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        return !userAccountRepository.existsByUsernameIgnoreCase(normalizeUsername(username));
     }
 
     public UserResponse getAuthenticatedUser(Long userId) {
@@ -57,7 +81,28 @@ public class AuthService {
     }
 
     private UserResponse toUserResponse(UserAccount user) {
-        return new UserResponse(user.getId(), user.getFullName(), user.getEmail());
+        String fullName = user.getFullName();
+        if (fullName == null || fullName.isBlank()) {
+            fullName = String.join(" ", safe(user.getFirstName()), safe(user.getLastName())).trim();
+        }
+
+        String username = user.getUsername();
+        if (username == null || username.isBlank()) {
+            username = user.getEmail();
+        }
+
+        return new UserResponse(user.getId(), fullName, username, user.getMobileNumber());
+    }
+
+    private String normalizeNamePart(String value) {
+        return value.trim().replaceAll("\\s+", " ");
+    }
+
+    private String normalizeUsername(String value) {
+        return value.trim().toLowerCase();
+    }
+
+    private String safe(String value) {
+        return value == null ? "" : value.trim();
     }
 }
-

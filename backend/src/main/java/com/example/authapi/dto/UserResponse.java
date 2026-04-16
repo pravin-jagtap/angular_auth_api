@@ -1,5 +1,4 @@
 package com.example.authapi.dto;
 
-public record UserResponse(Long id, String fullName, String email) {
+public record UserResponse(Long id, String fullName, String username, String mobileNumber) {
 }
-

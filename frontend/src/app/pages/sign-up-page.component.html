@@ -1,37 +1,137 @@
-<section class="auth-layout">
-  <div class="auth-panel">
-    <span class="panel-tag">Create your account</span>
-    <h1>Sign up and save your credentials to PostgreSQL.</h1>
-    <p>
-      Once the account is created, you can use the same email and password on the sign-in page to
-      access your welcome screen.
+<section class="auth-scene auth-scene--signup">
+  <aside class="auth-showcase">
+    <div class="brand-lockup">
+      <img
+        src="/branding/mahaesuvidha-marathi-logo.jpg"
+        alt="Maha E Suvidha logo"
+        class="brand-logo"
+      />
+      <div>
+        <p class="brand-label">Digital registration</p>
+        <h1>Create a service-ready account with a more premium experience.</h1>
+      </div>
+    </div>
+
+    <p class="showcase-copy">
+      The old Maha E Suvidha sign-up flow is now rebuilt with cleaner structure, stronger spacing,
+      better validation, and a visual language that feels more current without losing the original
+      brand identity.
     </p>
-  </div>
 
-  <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
-    <h2>Sign Up</h2>
+    <div class="showcase-metrics">
+      <div>
+        <strong>Username based</strong>
+        <span>Fast repeat logins for returning users</span>
+      </div>
+      <div>
+        <strong>Mobile ready</strong>
+        <span>Comfortable form layout across desktop and phone</span>
+      </div>
+      <div>
+        <strong>Service focused</strong>
+        <span>Profile fields shaped around your original portal flow</span>
+      </div>
+    </div>
+  </aside>
 
-    <label>
-      <span>Full name</span>
-      <input type="text" formControlName="fullName" placeholder="Enter your full name" />
-      @if (form.controls.fullName.touched && form.controls.fullName.invalid) {
-        <small>Full name must be at least 2 characters.</small>
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="auth-card__header">
+      <p class="eyebrow">Open your account</p>
+      <h2>Sign up with your service details</h2>
+      <p>Complete the form below and then sign in with your username and password.</p>
+    </div>
+
+    <div class="field-grid field-grid--split">
+      <label class="field">
+        <span>First name</span>
+        <input
+          type="text"
+          formControlName="firstName"
+          autocomplete="given-name"
+          placeholder="Pravin"
+        />
+        @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
+          <small>First name must be at least 2 characters.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span>Last name</span>
+        <input
+          type="text"
+          formControlName="lastName"
+          autocomplete="family-name"
+          placeholder="Jagtap"
+        />
+        @if (form.controls.lastName.touched && form.controls.lastName.invalid) {
+          <small>Last name must be at least 2 characters.</small>
+        }
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Username</span>
+      <input
+        type="text"
+        formControlName="username"
+        autocomplete="username"
+        placeholder="Choose a unique username"
+        (input)="clearUsernameState()"
+        (blur)="checkUsernameAvailability()"
+      />
+      @if (form.controls.username.touched && form.controls.username.invalid) {
+        <small>Use 3+ characters with letters, numbers, dots, underscores, or hyphens.</small>
+      } @else if (usernameHint()) {
+        <small
+          [class.is-positive]="usernameState() === 'available'"
+          [class.is-neutral]="usernameState() === 'checking'"
+        >
+          {{ usernameHint() }}
+        </small>
       }
     </label>
 
-    <label>
-      <span>Email</span>
-      <input type="email" formControlName="email" placeholder="you@example.com" />
-      @if (form.controls.email.touched && form.controls.email.invalid) {
-        <small>Please enter a valid email.</small>
-      }
-    </label>
+    <div class="field-grid field-grid--split">
+      <label class="field">
+        <span>Password</span>
+        <input
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          placeholder="Create a strong password"
+        />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <small>Password must be at least 8 characters.</small>
+        }
+      </label>
 
-    <label>
-      <span>Password</span>
-      <input type="password" formControlName="password" placeholder="Create a password" />
-      @if (form.controls.password.touched && form.controls.password.invalid) {
-        <small>Password must be at least 6 characters.</small>
+      <label class="field">
+        <span>Confirm password</span>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          autocomplete="new-password"
+          placeholder="Re-enter your password"
+        />
+        @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.hasError('required')) {
+          <small>Confirm password is required.</small>
+        } @else if (passwordMismatch()) {
+          <small>Passwords must match.</small>
+        }
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Mobile number</span>
+      <input
+        type="tel"
+        formControlName="mobileNumber"
+        autocomplete="tel"
+        inputmode="numeric"
+        placeholder="10 digit mobile number"
+      />
+      @if (form.controls.mobileNumber.touched && form.controls.mobileNumber.invalid) {
+        <small>Mobile number must contain exactly 10 digits.</small>
       }
     </label>
 
@@ -43,14 +143,13 @@
       <p class="error-banner">{{ errorMessage() }}</p>
     }
 
-    <button type="submit" [disabled]="isSubmitting()">
+    <button type="submit" class="submit-button" [disabled]="isSubmitting()">
       {{ isSubmitting() ? 'Creating account...' : 'Create Account' }}
     </button>
 
     <p class="helper-copy">
-      Already have an account?
+      Already registered?
       <a routerLink="/sign-in">Sign in here</a>
     </p>
   </form>
 </section>
-

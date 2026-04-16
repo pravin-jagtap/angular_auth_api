@@ -1,4 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: light;
+  --ink-strong: #16333f;
+  --ink-muted: #58717d;
+}
+
 html,
 body {
   margin: 0;
@@ -6,12 +11,13 @@ body {
 }
 
 body {
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-  color: #173846;
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--ink-strong);
   background:
-    radial-gradient(circle at top left, rgba(54, 177, 164, 0.22), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(29, 109, 134, 0.18), transparent 24%),
-    linear-gradient(180deg, #f4fbfb 0%, #edf4f7 100%);
+    radial-gradient(circle at top left, rgba(73, 198, 110, 0.18), transparent 24%),
+    radial-gradient(circle at top right, rgba(23, 95, 132, 0.16), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(248, 163, 37, 0.18), transparent 22%),
+    linear-gradient(180deg, #f7f7f1 0%, #eef4f6 100%);
 }
 
 * {

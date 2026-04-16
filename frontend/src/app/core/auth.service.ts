@@ -2,7 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { AuthResponse, LoginRequest, MessageResponse, SignupRequest, User } from '../models/user';
+import {
+  AuthResponse,
+  LoginRequest,
+  MessageResponse,
+  SignupRequest,
+  User,
+  UsernameAvailabilityResponse
+} from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,6 +21,13 @@ export class AuthService {
 
   signup(payload: SignupRequest): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${this.apiUrl}/signup`, payload, {
+      withCredentials: true
+    });
+  }
+
+  checkUsernameAvailability(username: string): Observable<UsernameAvailabilityResponse> {
+    return this.http.get<UsernameAvailabilityResponse>(`${this.apiUrl}/username-availability`, {
+      params: { username },
       withCredentials: true
     });
   }

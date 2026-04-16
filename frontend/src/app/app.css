@@ -33,6 +33,7 @@
 .brand strong {
   display: block;
   font-size: 1rem;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
 }
 
 .brand p {
@@ -41,16 +42,12 @@
   font-size: 0.9rem;
 }
 
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #1d6d86, #36b1a4);
-  color: #f7fbfc;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.brand-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 10px 20px rgba(24, 56, 70, 0.16);
 }
 
 .actions {
@@ -88,7 +85,7 @@
 }
 
 .primary-button {
-  background: linear-gradient(135deg, #173e4d, #2d7b75);
+  background: linear-gradient(135deg, #155f84, #43c85c 74%, #f8a325);
   color: #f8fffe;
   box-shadow: 0 14px 28px rgba(25, 80, 92, 0.22);
 }

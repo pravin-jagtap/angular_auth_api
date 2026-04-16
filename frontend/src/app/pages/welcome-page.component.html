@@ -4,8 +4,8 @@
   <span class="status-pill">Authenticated session</span>
   <h1>Welcome, {{ currentUser()?.fullName }}!</h1>
   <p>
-    You have successfully logged in using the credentials stored in PostgreSQL. This page is
-    protected and shown only to signed-in users.
+    You have successfully logged in to the upgraded Maha E Suvidha experience. This page remains
+    protected and is visible only after a valid authenticated session.
   </p>
 
   <dl class="profile-grid">
@@ -14,11 +14,14 @@
       <dd>{{ currentUser()?.fullName }}</dd>
     </div>
     <div>
-      <dt>Email</dt>
-      <dd>{{ currentUser()?.email }}</dd>
+      <dt>Username</dt>
+      <dd>{{ currentUser()?.username }}</dd>
+    </div>
+    <div>
+      <dt>Mobile</dt>
+      <dd>{{ currentUser()?.mobileNumber || 'Not provided' }}</dd>
     </div>
   </dl>
 
   <a routerLink="/" class="back-link">Back to landing page</a>
 </section>
-
