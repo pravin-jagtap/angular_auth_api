@@ -1,11 +1,11 @@
 package com.example.authapi.controller;
 
-import com.example.authapi.dto.AuthResponse;
-import com.example.authapi.dto.LoginRequest;
+import com.example.authapi.dto.auth.AuthResponse;
+import com.example.authapi.dto.auth.LoginRequest;
 import com.example.authapi.dto.MessageResponse;
-import com.example.authapi.dto.SignupRequest;
-import com.example.authapi.dto.UserResponse;
-import com.example.authapi.dto.UsernameAvailabilityResponse;
+import com.example.authapi.dto.auth.SignupRequest;
+import com.example.authapi.dto.auth.UserResponse;
+import com.example.authapi.dto.auth.UsernameAvailabilityResponse;
 import com.example.authapi.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

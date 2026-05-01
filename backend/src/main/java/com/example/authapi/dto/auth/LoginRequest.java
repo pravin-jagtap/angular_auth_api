@@ -1,4 +1,4 @@
-package com.example.authapi.dto;
+package com.example.authapi.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 

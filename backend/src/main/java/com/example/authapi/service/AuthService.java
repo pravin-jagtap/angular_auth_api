@@ -1,9 +1,9 @@
 package com.example.authapi.service;
 
-import com.example.authapi.dto.LoginRequest;
-import com.example.authapi.dto.SignupRequest;
-import com.example.authapi.dto.UserResponse;
-import com.example.authapi.model.UserAccount;
+import com.example.authapi.dto.auth.LoginRequest;
+import com.example.authapi.dto.auth.SignupRequest;
+import com.example.authapi.dto.auth.UserResponse;
+import com.example.authapi.entity.UserAccount;
 import com.example.authapi.repository.UserAccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,31 +22,35 @@ public class AuthService {
     }
 
     public void register(SignupRequest request) {
-        String username = normalizeUsername(request.username());
-        if (userAccountRepository.existsByUsernameIgnoreCase(username)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username is already taken.");
+        try {
+            String username = normalizeUsername(request.username());
+            if (userAccountRepository.existsByUsernameIgnoreCase(username)) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This username is already taken.");
+            }
+
+            if (!request.password().equals(request.confirmPassword())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password and confirm password must match.");
+            }
+
+            String firstName = normalizeNamePart(request.firstName());
+            String lastName = normalizeNamePart(request.lastName());
+            String fullName = firstName + " " + lastName;
+            String mobileNumber = request.mobileNumber().trim();
+            String generatedEmail = username + "@mahaesuvidha.local";
+
+            UserAccount user = new UserAccount();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setUsername(username);
+            user.setMobileNumber(mobileNumber);
+            user.setFullName(fullName);
+            user.setEmail(generatedEmail);
+            user.setPasswordHash(passwordEncoder.encode(request.password()));
+
+            userAccountRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        if (!request.password().equals(request.confirmPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password and confirm password must match.");
-        }
-
-        String firstName = normalizeNamePart(request.firstName());
-        String lastName = normalizeNamePart(request.lastName());
-        String fullName = firstName + " " + lastName;
-        String mobileNumber = request.mobileNumber().trim();
-        String generatedEmail = username + "@mahaesuvidha.local";
-
-        UserAccount user = new UserAccount();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setUsername(username);
-        user.setMobileNumber(mobileNumber);
-        user.setFullName(fullName);
-        user.setEmail(generatedEmail);
-        user.setPasswordHash(passwordEncoder.encode(request.password()));
-
-        userAccountRepository.save(user);
     }
 
     public UserResponse login(LoginRequest request) {

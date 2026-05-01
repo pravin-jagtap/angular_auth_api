@@ -1,4 +1,4 @@
-package com.example.authapi.model;
+package com.example.authapi.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
