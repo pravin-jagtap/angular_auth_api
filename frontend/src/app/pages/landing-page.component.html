@@ -1,25 +1,215 @@
-<section class="hero">
-  <div class="hero-copy">
-    <span class="eyebrow">Maha E Suvidha Access</span>
-    <h1>A cleaner, more modern entry experience for your service portal.</h1>
-    <p>
-      Users can register with service-ready profile details, sign in using a username and password,
-      and enter a protected experience backed by Spring Boot sessions and PostgreSQL persistence.
-    </p>
+<section class="home-page">
+  <section class="hero snap-section">
+    <div class="hero-copy">
+      <span class="eyebrow">महा ई सुविधा</span>
+      <h1>तुमच्या सेवांना, अकौटिंगला, आणि व्यवसायाला डिजिटल वेग द्या.</h1>
+      <p>
+        महा ई सुविधा तुमच्या व्यवसायासाठी ई-सुविधा, सेल्फ अकौटिंग, आणि आउटसोर्स अकौटिंग
+        सेवा आधुनिक, स्वच्छ, आणि विश्वासार्ह वेब अनुभवातून उपलब्ध करून देते.
+      </p>
 
-    <div class="hero-actions">
-      <a routerLink="/sign-in" class="primary-link">Sign In</a>
-      <a routerLink="/sign-up" class="secondary-link">Open Account</a>
+      <div class="hero-actions">
+        <a routerLink="/sign-in" class="primary-link">Sign In</a>
+        <a href="#services" class="secondary-link">Explore Services</a>
+      </div>
     </div>
-  </div>
 
-  <aside class="hero-card">
-    <h2>What changed in this version</h2>
-    <ul>
-      <li>Brand-inspired login and sign-up pages rebuilt from the old JSP flow</li>
-      <li>Username-based authentication with richer registration details</li>
-      <li>Live username availability check during account creation</li>
-      <li>Protected welcome experience backed by PostgreSQL and Spring sessions</li>
-    </ul>
-  </aside>
+    <aside class="hero-visual" aria-label="Maha E Suvidha platform showcase">
+      <div class="hero-device-frame">
+        <img src="/homepage/hero-img.png" alt="Maha E Suvidha service preview" class="hero-figure" />
+      </div>
+
+      <div class="trust-card">
+        <span>Trusted digital partner</span>
+        <strong>ई-सुविधा + अकौटिंग + सपोर्ट</strong>
+      </div>
+    </aside>
+  </section>
+
+  <section class="signal-band snap-section">
+    <div class="signal-band__panel">
+      <div class="signal-band__intro">
+        <span class="section-kicker">Why Maha E Suvidha</span>
+        <h2>सेवा, वेग, आणि विश्वास एकाच अनुभवात.</h2>
+        <p>
+          छोट्या कार्डांची गर्दी नको, म्हणून मुख्य ताकद आणि आकडेवारी एका मजबूत प्रीमियम
+          सेक्शनमध्ये मांडली आहे, जे स्क्रोल करताना पूर्णपणे दिसेल.
+        </p>
+      </div>
+
+      <div class="highlight-row">
+        @for (highlight of highlights; track highlight.title) {
+          <article class="highlight-card">
+            <h2>{{ highlight.title }}</h2>
+            <p>{{ highlight.description }}</p>
+          </article>
+        }
+      </div>
+
+      <div class="stats-section">
+        @for (stat of stats; track stat.label) {
+          <article class="stat-card">
+            <strong>{{ stat.value }}</strong>
+            <span>{{ stat.label }}</span>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="story-grid snap-section" id="about">
+    <article class="story-intro section-card">
+      <span class="section-kicker">About Us</span>
+      <h2>आधुनिक वित्तीय सेवा, स्थानिक भाषेतील स्पष्टता, आणि मजबूत विश्वास.</h2>
+      <p>
+        आमचे ध्येय म्हणजे आर्थिक सेवा अधिक सुलभ, वेगवान, आणि प्रत्येकासाठी वापरण्यास सोपी
+        करणे. जुन्या वेबसाइटची आत्मीयता कायम ठेवून, आम्ही ती आता अधिक प्रीमियम आणि आधुनिक
+        स्वरूपात सादर करत आहोत.
+      </p>
+    </article>
+
+    <div class="story-points">
+      @for (highlight of highlights; track highlight.title) {
+        <article class="point-card section-card">
+          <h3>{{ highlight.title }}</h3>
+          <p>{{ highlight.description }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="services-section snap-section" id="services">
+    <div class="section-heading">
+      <span class="section-kicker">Services</span>
+      <h2>तुमच्या कामाच्या पद्धतीनुसार निवडा योग्य सेवा अनुभव</h2>
+      <p>
+        ई-सुविधा केंद्र, स्वतःचे अकौटिंग, किंवा पूर्ण आउटसोर्स मॉडेल. प्रत्येक सेवेसाठी रचना
+        वेगळी, पण अनुभव एकसंध आणि व्यावसायिक.
+      </p>
+    </div>
+
+    <div class="service-list">
+      @for (service of services; track service.title; let even = $even) {
+        <article class="service-card" [class.service-card--reverse]="even">
+          <div class="service-media">
+            <img [src]="service.image" [alt]="service.imageAlt" />
+          </div>
+
+          <div class="service-content">
+            <span class="service-tag">{{ service.title }}</span>
+            <h3>{{ service.subtitle }}</h3>
+            <p>{{ service.description }}</p>
+
+            <ul>
+              @for (bullet of service.bullets; track bullet) {
+                <li>{{ bullet }}</li>
+              }
+            </ul>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="plans-section snap-section" id="pricing">
+    <div class="section-heading">
+      <span class="section-kicker">Pricing</span>
+      <h2>वेगवेगळ्या व्यवसाय गरजांसाठी स्पष्ट आणि साधे प्लॅन</h2>
+      <p>लहान सुरुवातीपासून टीम-आधारित अकौटिंगपर्यंत, तुम्हाला योग्य बसेल असा पर्याय निवडा.</p>
+    </div>
+
+    <div class="plan-grid">
+      @for (plan of plans; track plan.name) {
+        <article class="plan-card" [class.plan-card--featured]="plan.badge">
+          @if (plan.badge) {
+            <span class="plan-badge">{{ plan.badge }}</span>
+          }
+
+          <h3>{{ plan.name }}</h3>
+          <p class="plan-summary">{{ plan.summary }}</p>
+          <p class="plan-price">
+            <strong>{{ plan.price }}</strong>
+            <span>{{ plan.cadence }}</span>
+          </p>
+
+          <ul>
+            @for (feature of plan.features; track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+
+          <a routerLink="/sign-up" class="plan-link">Get Started</a>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="faq-section snap-section" id="faq">
+    <div class="faq-shell">
+      <div class="faq-copy">
+        <span class="section-kicker">FAQ</span>
+        <h2>वारंवार विचारले जाणारे प्रश्न</h2>
+        <p>
+          वापरकर्त्यांना सेवा कशी चालते, अकौटिंगचा मॉडेल काय आहे, आणि महा ई सुविधा नेमके
+          कोणासाठी आहे याबद्दल लवकर समजावे म्हणून मुख्य प्रश्न एका जागी.
+        </p>
+        <img src="/homepage/faq.jpg" alt="Customer support and FAQ" />
+      </div>
+
+      <div class="faq-list">
+        @for (faq of faqs; track faq.question) {
+          <details class="faq-item">
+            <summary>{{ faq.question }}</summary>
+            <p>{{ faq.answer }}</p>
+          </details>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section snap-section" id="contact">
+    <div class="section-heading">
+      <span class="section-kicker">Contact</span>
+      <h2>तुमच्या सेवांसाठी, मार्गदर्शनासाठी, किंवा भागीदारीसाठी आम्हाला संपर्क करा</h2>
+      <p>आपली टीम प्रतिसादक्षम, स्थानिक, आणि सातत्याने सहकार्य देण्यासाठी तयार आहे.</p>
+    </div>
+
+    <div class="contact-grid">
+      @for (contact of contacts; track contact.title) {
+        <article class="contact-card" [attr.data-accent]="contact.accent">
+          <h3>{{ contact.title }}</h3>
+          @for (line of contact.lines; track line) {
+            <p>{{ line }}</p>
+          }
+        </article>
+      }
+    </div>
+
+    <footer class="home-footer">
+      <div class="home-footer__brand">
+        <strong>महा ई सुविधा</strong>
+        <p>विश्वासार्ह डिजिटल सेवा आणि अकौटिंग सोल्यूशन्स.</p>
+      </div>
+
+      <div class="home-footer__middle">
+        <span>Call</span>
+        <strong>+91 9552789899</strong>
+        <span>Email</span>
+        <strong>app.mahaesuvidha@gmail.com</strong>
+      </div>
+
+      <div class="social-links social-links--footer">
+        <a href="https://www.youtube.com/@maha_e_suvidha" target="_blank" rel="noreferrer">YouTube</a>
+        <a href="https://www.facebook.com/jagtappatilesuvidha" target="_blank" rel="noreferrer">Facebook</a>
+        <a href="https://www.instagram.com/maha_e_suvidha/" target="_blank" rel="noreferrer">Instagram</a>
+        <a
+          href="https://play.google.com/store/apps/details?id=rahul.jagtap.dmas&pcampaignid=web_share&pli=1"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Google Play
+        </a>
+      </div>
+    </footer>
+  </section>
 </section>
