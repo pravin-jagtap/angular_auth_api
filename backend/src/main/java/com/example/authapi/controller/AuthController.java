@@ -6,12 +6,15 @@ import com.example.authapi.dto.MessageResponse;
 import com.example.authapi.dto.auth.SignupRequest;
 import com.example.authapi.dto.auth.UserResponse;
 import com.example.authapi.dto.auth.UsernameAvailabilityResponse;
+import com.example.authapi.security.CustomUserPrincipal;
+import com.example.authapi.security.jwt.JwtService;
 import com.example.authapi.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private JwtService jwtService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, JwtService jwtService) {
+        this.jwtService = jwtService;
         this.authService = authService;
     }
 
@@ -43,28 +48,36 @@ public class AuthController {
             HttpSession session
     ) {
         UserResponse user = authService.login(request);
-        httpServletRequest.changeSessionId();
-        session.setAttribute("USER_ID", user.id());
+        String token = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(new AuthResponse("Login successful.", user));
+//        httpServletRequest.changeSessionId();
+//        session.setAttribute("USER_ID", user.id());
+
+        return ResponseEntity.ok(new AuthResponse("Login successful.", user, token,
+                "Bearer", jwtService.getExpirationSeconds()));
     }
 
     @PostMapping("/logout")
     public ResponseEntity<MessageResponse> logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
         return ResponseEntity.ok(new MessageResponse("Logged out successfully."));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<AuthResponse> me(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        Long userId = session != null ? (Long) session.getAttribute("USER_ID") : null;
-        UserResponse user = authService.getAuthenticatedUser(userId);
-        return ResponseEntity.ok(new AuthResponse("Authenticated user loaded.", user));
+    public ResponseEntity<AuthResponse> me(Authentication authentication) {
+        CustomUserPrincipal principal =(CustomUserPrincipal) authentication.getPrincipal();
+        UserResponse user = authService.getAuthenticatedUser(principal.getId());
+
+        return ResponseEntity.ok(new AuthResponse(
+                "Authenticated user loaded.",
+                user,
+                null,
+                "Bearer",
+                jwtService.getExpirationSeconds()
+        ));
     }
 
     @GetMapping("/username-availability")
