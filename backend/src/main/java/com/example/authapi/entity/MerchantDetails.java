@@ -2,7 +2,8 @@ package com.example.authapi.entity;
 
 import jakarta.persistence.*;
 
-@Entity(name = "merchants")
+@Entity
+@Table(name = "merchants")
 public class MerchantDetails {
 
     @Id
@@ -10,7 +11,7 @@ public class MerchantDetails {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private UserAccount user;
 
     @Column(name="merchant_name")
@@ -19,7 +20,7 @@ public class MerchantDetails {
     @Column(name="gst_number")
     private String gstNumber;
 
-    @Column(name=" mobile_number")
+    @Column(name="mobile_number")
     private String mobileNumber;
 
     @Column(name="address")

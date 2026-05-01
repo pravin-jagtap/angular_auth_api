@@ -14,7 +14,7 @@ A simple full-stack login and signup application built with:
 
 ## Prerequisites
 
-- Java 17 or newer
+- Java 21
 - Maven 3.9+
 - Node.js 20+
 - Docker Desktop (recommended for PostgreSQL)
@@ -57,4 +57,3 @@ The Angular app will run on `http://localhost:4200`.
 - Login using saved credentials
 - Logout support
 - Protected welcome page for authenticated users
-

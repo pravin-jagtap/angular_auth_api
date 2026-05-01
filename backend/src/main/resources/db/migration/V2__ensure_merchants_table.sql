@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS merchants (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    merchant_name VARCHAR(150) NOT NULL,
+    gst_number VARCHAR(50),
+    mobile_number VARCHAR(20),
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
